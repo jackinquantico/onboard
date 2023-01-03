@@ -15,8 +15,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;1,400&amp;display=swap" rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="resources/css/styles.css" rel="stylesheet" />
+<!-- jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+
 </head>
 <body id="page-top">
+
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
 
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm" id="mainNav">
