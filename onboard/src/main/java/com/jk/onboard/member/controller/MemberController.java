@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jk.onboard.member.model.service.MemberService;
 import com.jk.onboard.member.model.vo.Member;
@@ -37,5 +38,13 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="idCheck.me", produces="text/html; charset=UTF-8")
+	public String idCheck(Member m) {
+		
+		int count = memberService.idCheck(m);
+		
+		return (count > 0) ? "NNNNN" : "YYYYY";
+	}
 	
 }

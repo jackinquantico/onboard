@@ -45,7 +45,7 @@
 <div class="masthead">
 
 	<div class="container">
-	<form action="enroll.me" method="post" id="enrollForm">
+	<form action="enroll.me" method="post" id="enrollForm" enctype="multipart/form-data">
 		
 		<div class="d-grid" id="pageTitle">
 			<h4>회원가입</h4>
@@ -57,46 +57,46 @@
 				<tr>
 					<td width="15%">아이디</td>
 					<td width="50%">
-						<input type="text" name="userId" required class="form-control">
+						<input type="text" name="userId" required class="form-control" maxlength="30">
 					</td>
 					<td width="35%">
-						<button class="btn btn-primary">중복체크</button>
+						<button type="button" class="btn btn-primary" onclick="idCheck();">중복체크</button>
 					</td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
 					<td>
-						<input type="password" name="userPwd" required class="form-control">
+						<input type="password" id="userPwd" name="userPwd" required class="form-control" maxlength="30" placeholder="영문,숫자,특수문자 8~30자" >
 					</td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>비밀번호 확인</td>
 					<td>
-						<input type="password" required class="form-control">
+						<input type="password" id="checkPwd" required class="form-control" placeholder="영문,숫자,특수문자 8~30자" >
 					</td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>이름</td>
 					<td>
-						<input type="text" name="userName" required class="form-control">
+						<input type="text" name="userName" id="userName" required class="form-control" maxlength="30">
 					</td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>이메일</td>
 					<td>
-						<input type="email" name="email" required class="form-control">
+						<input type="email" name="email" id="email" required class="form-control" maxlength="50">
 					</td>
 					<td>
-						<button class="btn btn-primary">이메일 인증</button>
+						<button type="button" class="btn btn-primary">이메일 인증</button>
 					</td>
 				</tr>
 				<tr>
 					<td>휴대폰</td>
 					<td>
-						<input type="phone" name="phone" required class="form-control">
+						<input type="text" name="phone" id="phone" required class="form-control" placeholder="- 포함" oninput="autoHyphen(this)">
 					</td>
 					<td></td>
 				</tr>
@@ -119,14 +119,14 @@
 				<tr>
 					<td></td>
 					<td>
-						<input type="text" name="address" class="form-control" id="sample6_address">
+						<input type="text" name="address" class="form-control" id="sample6_address" maxlength="66">
 					</td>
 					<td></td>
 				</tr>
 				<tr>
 					<td>프로필 사진</td>
 					<td>
-						<input type="file" name="profile" class="form-control">
+						<input type="file" name="profileFile" class="form-control">
 					</td>
 					<td></td>
 				</tr>
@@ -136,7 +136,7 @@
 		<br>
 		
 		<div class="d-grid" id="btnarea">
-			<button type="submit" class="btn btn-primary rounded-pill btn-lg" id="submitbtn">
+			<button type="submit" onclick="return validate();" class="btn btn-primary rounded-pill btn-lg" id="submitbtn" disabled>
 	            Sign up
 	        </button>
         </div>
@@ -149,6 +149,82 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 <script>
+function idCheck() {
+	
+	var $userId = $("#enrollTable input[name=userId]");
+	
+	$.ajax({
+		url: "idCheck.me",
+		data: {
+			userId : $userId.val()
+		},
+		success: function(result) {
+			
+			if (result == "NNNNN") { // 사용 불가
+				
+				alert("이미 존재하거나 탈퇴한 회원의 아이디입니다.");
+				$userId.focus();
+				
+			} else { // 사용 가능
+				
+				if (confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
+					$userId.attr("readonly", true);
+					$("#submitbtn").attr("disabled", false);
+					
+				} else {
+					$userId.focus();
+				}
+			}
+		},
+		error: function() {
+			console.log("중복체크 ajax 실패");
+		}
+	});
+}
+
+function validate() {
+	
+	var userPwd = $("#userPwd").val();
+	var checkPwd = $("#checkPwd").val();
+	var userName = $("#userName").val();
+	var email = $("#email").val();
+	var phone = $("#phone").val();
+	
+	// 비밀번호 정규식 : 영문자, 숫자, 특수문자 포함 12~30자
+	var regex = /^[a-z\d!@#$%^&*]{8,30}$/i;
+	
+	if (!regex.test(userPwd)) {
+		console.log(userPwd);
+		alert("비밀번호는 영문자, 숫자, 특수문자를 포함해 총 8~30자로 입력해주세요.");
+		return false;
+	}
+	
+	if (userPwd != checkPwd) {
+		alert("비밀번호가 일치하지 않습니다.");
+		return false;
+	}
+	
+	regex = /^[가-힣]{2,5}$/;
+	
+	if (!regex.test(userName)) {
+		alert("한글 이름 2~5자를 입력해주세요.");
+		return false;
+	}
+	
+	regex = /^(\d{2,3})-(\d{3,4})-(\d{4})$/;
+    if(!regExp.test(phone)) {
+        alert("-포함 유효한 전화번호를 입력해주세요.");
+        return false;
+    }
+    
+    $("#submitbtn").submit;
+}
+
+const autoHyphen = (target) => {
+ target.value = target.value
+   .replace(/[^0-9]/g, '')
+  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+}
 
 function sample6_execDaumPostcode() {
     new daum.Postcode({

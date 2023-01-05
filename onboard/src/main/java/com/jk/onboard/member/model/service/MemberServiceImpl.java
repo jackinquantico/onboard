@@ -39,4 +39,9 @@ public class MemberServiceImpl implements MemberService {
 		return 0;
 	}
 
+	@Override
+	public int idCheck(Member m) {
+		return memberDao.idCheck(sqlSession, m);
+	}
+
 }
