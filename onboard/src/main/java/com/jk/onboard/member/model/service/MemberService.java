@@ -15,4 +15,13 @@ public interface MemberService {
 	int idCheck(Member m);
 	
 	Member loginMember(Member m);
+	
+	int countUserId(Member m);
+	
+	String findUserId(Member m);
+	
+	int countUserPwd(Member m);
+	
+	String findUserPwd(Member m);
+	
 }

@@ -20,4 +20,20 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.loginMember", m);
 	}
 
+	public String findUserId(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.findUserId", m);
+	}
+
+	public int countUserId(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.countUserId", m);
+	}
+
+	public int countUserPwd(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.countUserPwd", m);
+	}
+
+	public String findUserPwd(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.findUserPwd", m);
+	}
+
 }

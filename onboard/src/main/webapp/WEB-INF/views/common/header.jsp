@@ -99,20 +99,17 @@
                         <div class="form-floating mb-3">
                             <input class="form-control" id="name" name="userId" type="text" required />
                             <label for="name">ID</label>
-                            <!-- 
-                            ajax, js 로 유효성 검사
-                            <div class="invalid-feedback">ID is required.</div>
-                             -->
                         </div>
                         <!-- Email address input-->
                         <div class="form-floating mb-3">
                             <input class="form-control" id="email" name="userPwd" type="password" required />
                             <label for="email">Password</label>
-                            <!-- 
-                            ajax, js 로 유효성 검사
-                            <div class="invalid-feedback">An email is required.</div>
-                            <div class="invalid-feedback">Email is not valid.</div>
-                            -->
+                        </div>
+                        <div class="mb-3">
+                        	<input type="checkbox" id="saveId" name="saveId" value="Y">
+                        	<label for="saveId">아이디 저장</label> | 
+                        	<a href="find.id">아이디 찾기</a> | 
+                        	<a href="find.pwd">비밀번호 찾기</a>
                         </div>
                         
                         <!-- Submit Button-->

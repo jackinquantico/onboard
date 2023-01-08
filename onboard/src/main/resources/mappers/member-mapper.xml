@@ -55,5 +55,39 @@
 		AND USER_ID = #{userId}
 		AND USER_PWD = #{userPwd}
 	</select>
+	
+	<select id="countUserId" parameterType="member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_NAME = #{userName}
+		AND EMAIL = #{email}
+		AND USER_STATUS = 'Y'
+	</select>
+	
+	<select id="findUserId" parameterType="member" resultType="string">
+		SELECT USER_ID
+		FROM MEMBER
+		WHERE USER_NAME = #{userName}
+		AND EMAIL = #{email}
+		AND USER_STATUS = 'Y'
+	</select>
+
+	<select id="countUserPwd" parameterType="member" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_ID = #{userId}
+		AND USER_NAME = #{userName}
+		AND EMAIL = #{email}
+		AND USER_STATUS = 'Y'
+	</select>
+	
+	<select id="findUserPwd" parameterType="member" resultType="string">
+		SELECT USER_PWD
+		FROM MEMBER
+		WHERE USER_ID = #{userId}
+		AND USER_NAME = #{userName}
+		AND EMAIL = #{email}
+		AND USER_STATUS = 'Y'
+	</select>
 
 </mapper>

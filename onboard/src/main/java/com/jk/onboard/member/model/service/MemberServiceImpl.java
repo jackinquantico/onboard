@@ -49,4 +49,24 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.loginMember(sqlSession, m);
 	}
 
+	@Override
+	public String findUserId(Member m) {
+		return memberDao.findUserId(sqlSession, m);
+	}
+
+	@Override
+	public int countUserId(Member m) {
+		return memberDao.countUserId(sqlSession, m);
+	}
+	
+	@Override
+	public String findUserPwd(Member m) {
+		return memberDao.findUserPwd(sqlSession, m);
+	}
+
+	@Override
+	public int countUserPwd(Member m) {
+		return memberDao.countUserPwd(sqlSession, m);
+	}
+
 }
