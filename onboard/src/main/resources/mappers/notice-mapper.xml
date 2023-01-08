@@ -5,6 +5,7 @@
 	<resultMap id="noticeResultSet" type="notice">
 		<result column="NOTICE_NO" property="noticeNo" />
 		<result column="NOTICE_TITLE" property="noticeTitle" />
+		<result column="NOTICE_CONTENT" property="noticeContent" />
 		<result column="USER_NO" property="userNo" />
 		<result column="WRITE_DATE" property="writeDate" />
 		<result column="COUNT" property="count" />
@@ -19,6 +20,7 @@
 		FROM NOTICE N
 		JOIN MEMBER M ON (N.USER_NO = M.USER_NO)
 		WHERE N.NOTICE_STATUS = 'N'
+		ORDER BY NOTICE_NO DESC
 	</select>
 	
 	<select id="selectListCount" resultType="_int">
@@ -26,5 +28,48 @@
 		FROM NOTICE
 		WHERE NOTICE_STATUS = 'N'
 	</select>
+	
+	<insert id="insertNotice" parameterType="notice">
+		INSERT INTO NOTICE (NOTICE_NO
+						  , NOTICE_TITLE
+						  , NOTICE_CONTENT
+						  , USER_NO)
+		VALUES (SEQ_NOTICE.NEXTVAL
+			  , #{noticeTitle}
+			  , #{noticeContent}
+			  , #{userNo})
+	</insert>
+	
+	<select id="selectNotice" parameterType="_int" resultMap="noticeResultSet">
+		SELECT NOTICE_NO
+			 , NOTICE_TITLE
+			 , NOTICE_CONTENT
+			 , TO_CHAR(WRITE_DATE, 'YYYY-MM-DD HH24:MI:SS') AS "WRITE_DATE"
+			 , COUNT
+			 , USER_ID AS "USER_NO"
+		FROM NOTICE N
+		JOIN MEMBER M ON (N.USER_NO = M.USER_NO)
+		WHERE N.NOTICE_STATUS = 'N'
+		AND NOTICE_NO = #{nno}
+	</select>
+	
+	<update id="increaseCount" parameterType="_int">
+		UPDATE NOTICE
+		SET COUNT = COUNT + 1
+		WHERE NOTICE_NO = #{nno}
+	</update>
+	
+	<update id="updateNotice" parameterType="notice">
+		UPDATE NOTICE
+		SET NOTICE_TITLE = #{noticeTitle}
+		  , NOTICE_CONTENT = #{noticeContent}
+		WHERE NOTICE_NO = #{noticeNo}
+	</update>
+	
+	<update id="deleteNotice" parameterType="_int">
+		UPDATE NOTICE
+		SET NOTICE_STATUS = 'Y'
+		WHERE NOTICE_NO = #{noticeNo}
+	</update>
 	
 </mapper>

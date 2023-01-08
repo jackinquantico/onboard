@@ -26,31 +26,32 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int insertNotice(Notice n) {
-		// TODO Auto-generated method stub
-		return 0;
+		return noticeDao.insertNotice(sqlSession, n);
 	}
 
 	@Override
 	public int updateNotice(Notice n) {
-		// TODO Auto-generated method stub
-		return 0;
+		return noticeDao.updateNotice(sqlSession, n);
 	}
 
 	@Override
-	public int deleteNotice(Notice n) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteNotice(int nno) {
+		return noticeDao.deleteNotice(sqlSession, nno);
 	}
 
 	@Override
-	public Notice selectNotice(Notice n) {
-		// TODO Auto-generated method stub
-		return null;
+	public Notice selectNotice(int nno) {
+		return noticeDao.selectNotice(sqlSession, nno);
 	}
 
 	@Override
 	public int selectListCount() {
 		return noticeDao.selectListCount(sqlSession);
+	}
+
+	@Override
+	public int increaseCount(int nno) {
+		return noticeDao.increaseCount(sqlSession, nno);
 	}
 
 }

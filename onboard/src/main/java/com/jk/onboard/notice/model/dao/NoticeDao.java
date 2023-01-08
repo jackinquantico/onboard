@@ -26,4 +26,24 @@ public class NoticeDao {
 		return sqlSession.selectOne("noticeMapper.selectListCount");
 	}
 
+	public int insertNotice(SqlSessionTemplate sqlSession, Notice n) {
+		return sqlSession.insert("noticeMapper.insertNotice", n);
+	}
+
+	public Notice selectNotice(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.selectOne("noticeMapper.selectNotice", nno);
+	}
+
+	public int updateNotice(SqlSessionTemplate sqlSession, Notice n) {
+		return sqlSession.update("noticeMapper.updateNotice", n);
+	}
+
+	public int increaseCount(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.update("noticeMapper.increaseCount", nno);
+	}
+
+	public int deleteNotice(SqlSessionTemplate sqlSession, int nno) {
+		return sqlSession.update("noticeMapper.deleteNotice", nno);
+	}
+
 }

@@ -20,9 +20,11 @@ public interface NoticeService {
 	int updateNotice(Notice n);
 	
 	// 삭제
-	int deleteNotice(Notice n);
+	int deleteNotice(int nno);
 	
 	// selectOne
-	Notice selectNotice(Notice n);
+	Notice selectNotice(int nno);
+
+	int increaseCount(int nno);
 	
 }

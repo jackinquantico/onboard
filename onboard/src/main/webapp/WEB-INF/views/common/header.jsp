@@ -17,7 +17,12 @@
 <link href="resources/css/styles.css" rel="stylesheet" />
 <!-- jQuery -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-
+<style>
+.atag {
+	color: black;
+	text-decoration: none;
+}
+</style>
 </head>
 <body id="page-top">
 
@@ -107,9 +112,9 @@
                         </div>
                         <div class="mb-3">
                         	<input type="checkbox" id="saveId" name="saveId" value="Y">
-                        	<label for="saveId">아이디 저장</label> | 
-                        	<a href="find.id">아이디 찾기</a> | 
-                        	<a href="find.pwd">비밀번호 찾기</a>
+                        	<label for="saveId">아이디 저장</label> &nbsp;&nbsp;| &nbsp;&nbsp; 
+                        	<a href="find.id" class="atag">아이디 찾기</a> &nbsp;&nbsp;| &nbsp;&nbsp;
+                        	<a href="find.pwd" class="atag">비밀번호 찾기</a>
                         </div>
                         
                         <!-- Submit Button-->

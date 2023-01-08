@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Welcome OnBoard</title>
 <style>
-#content { height: 500px; }
+#content { height: 600px; }
 
 #pageTitle { padding-bottom: 50px;}
 
@@ -48,11 +48,11 @@
 			<div id="titlearea" style="float: left">
 				<h4>공지사항</h4>
 			</div>
-			<%-- <c:if test="${ not empty loginUser }">
-			</c:if> --%>
-			<div id="btnarea" style="float: right;">
-				<a href="enroll.no" class="btn btn-primary">작성하기</a>
-			</div>
+			<c:if test="${ loginUser.userId eq 'admin' }">
+				<div id="btnarea" style="float: right;">
+					<a href="enroll.no" class="btn btn-primary">작성하기</a>
+				</div>
+			</c:if>
 		</div>
 		
 		<br>
@@ -67,7 +67,7 @@
 					<th width="5%">조회수</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody id="tbody">
 				<c:choose>
 					<c:when test="${ empty nlist }">
 						<tr>
@@ -80,7 +80,7 @@
 						<c:forEach var="n" items="${ nlist }">
 							<tr>
 								<td align="center">${ n.noticeNo }</td>
-								<td>${ n.noticeTitle }</td>
+								<td><a href="detail.no?nno=${ n.noticeNo }" class="atag">${ n.noticeTitle }</a></td>
 								<td align="center">${ n.userNo }</td>
 								<td align="center">${ n.writeDate }</td>
 								<td align="center">${ n.count }</td>
