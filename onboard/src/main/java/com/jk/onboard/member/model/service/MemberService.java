@@ -13,4 +13,6 @@ public interface MemberService {
 	int deleteMember(Member m);
 	
 	int idCheck(Member m);
+	
+	Member loginMember(Member m);
 }

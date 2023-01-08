@@ -3,9 +3,20 @@
 <mapper namespace="memberMapper">
 
 	<resultMap id="memberResultSet" type="member">
-	<!-- 
-		<result column="SELLER_NO" property="sellerNo" />
-	 -->
+		<result column="USER_NO" property="userNo" />
+		<result column="USER_ID" property="userId" />
+		<result column="USER_PWD" property="userPwd" />
+		<result column="USER_NAME" property="userName" />
+		<result column="EMAIL" property="email" />
+		<result column="PHONE" property="phone" />
+		<result column="BIRTH" property="birth" />
+		<result column="GENDER" property="gender" />
+		<result column="ADDRESS" property="address" />
+		<result column="ENROLL_DATE" property="enrollDate" />
+		<result column="USER_STATUS" property="userStatus" />
+		<result column="PROFILE" property="profile" />
+		<result column="EMAIL_KEY" property="emailKey" />
+		<result column="EMAIL_AUTH" property="emailAuth" />
 	</resultMap>
 	
 	<insert id="insertMember" parameterType="member">
@@ -35,6 +46,14 @@
 		SELECT COUNT(*)
 		FROM MEMBER
 		WHERE USER_ID = #{userId}
+	</select>
+	
+	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
+		SELECT *
+		FROM MEMBER
+		WHERE USER_STATUS = 'Y'
+		AND USER_ID = #{userId}
+		AND USER_PWD = #{userPwd}
 	</select>
 
 </mapper>

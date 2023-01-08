@@ -38,27 +38,50 @@
 	        </button>
 	        <div class="collapse navbar-collapse" id="navbarResponsive">
 	            <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-	                <li class="nav-item"><a class="nav-link me-lg-3" href="#">Features</a></li>
-	                <li class="nav-item"><a class="nav-link me-lg-3" href="#">Download</a></li>
+	                <li class="nav-item"><a class="nav-link me-lg-3" href="list.no">공지사항</a></li>
+	                <li class="nav-item"><a class="nav-link me-lg-3" href="#">일반게시판</a></li>
 	            </ul>
 	            
-	            <!-- 로그인 모달창 뜨도록 -->
-	            <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal">
-	                <span class="d-flex align-items-center">
-	                    <i class="bi-chat-text-fill me-2"></i>
-	                    <span class="small">Login</span>
-	                </span>
-	            </button>
-	            
-	            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	            
-	            <!-- 회원 가입 페이지로 이동하게 -->
-	            <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" onclick="location.href='enrollForm.me'">
-	                <span class="d-flex align-items-center">
-	                    <i class="bi-chat-text-fill me-2"></i>
-	                    <span class="small">Sign up</span>
-	                </span>
-	            </button>
+	            <c:choose>
+	            	<c:when test="${ empty loginUser }">
+			            <!-- 로그인 모달창 뜨도록 -->
+			            <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal" data-bs-target="#loginModal">
+			                <span class="d-flex align-items-center">
+			                    <i class="bi-chat-text-fill me-2"></i>
+			                    <span class="small">Login</span>
+			                </span>
+			            </button>
+			            
+			            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			            
+			            <!-- 회원 가입 페이지로 이동하게 -->
+			            <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" onclick="location.href='enrollForm.me'">
+			                <span class="d-flex align-items-center">
+			                    <i class="bi-chat-text-fill me-2"></i>
+			                    <span class="small">Sign up</span>
+			                </span>
+			            </button>
+		            </c:when>
+		            <c:otherwise>
+		            	<!-- 회원 마이페이지로 이동 -->
+			            <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
+			                <span class="d-flex align-items-center">
+			                    <i class="bi-chat-text-fill me-2"></i>
+			                    <span class="small">MyPage</span>
+			                </span>
+			            </button>
+			            
+			            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			            
+			            <!-- 로그아웃 -->
+			            <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" onclick="location.href='logout.me'">
+			                <span class="d-flex align-items-center">
+			                    <i class="bi-chat-text-fill me-2"></i>
+			                    <span class="small">Logout</span>
+			                </span>
+			            </button>
+		            </c:otherwise>
+	            </c:choose>
 	        </div>
 	    </div>
 	</nav>
@@ -71,7 +94,7 @@
                     <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body border-0 p-4">
-                    <form id="contactForm">
+                    <form action="login.me" method="post" id="contactForm">
                         <!-- Name input-->
                         <div class="form-floating mb-3">
                             <input class="form-control" id="name" name="userId" type="text" required />

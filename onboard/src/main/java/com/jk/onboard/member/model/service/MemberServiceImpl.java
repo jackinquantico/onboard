@@ -44,4 +44,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDao.idCheck(sqlSession, m);
 	}
 
+	@Override
+	public Member loginMember(Member m) {
+		return memberDao.loginMember(sqlSession, m);
+	}
+
 }
