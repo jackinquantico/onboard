@@ -49,7 +49,20 @@
 	</select>
 	
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet">
-		SELECT *
+		SELECT USER_NO
+			 , USER_ID
+			 , USER_PWD
+			 , USER_NAME
+			 , EMAIL
+			 , PHONE
+			 , TO_CHAR(BIRTH, 'YYYY-MM-DD') AS "BIRTH"
+			 , GENDER
+			 , ADDRESS
+			 , ENROLL_DATE
+			 , USER_STATUS
+			 , PROFILE
+			 , EMAIL_KEY
+			 , EMAIL_AUTH
 		FROM MEMBER
 		WHERE USER_STATUS = 'Y'
 		AND USER_ID = #{userId}
@@ -97,5 +110,31 @@
 		  , PROFILE = #{profile}
 		WHERE USER_NO = #{userNo}
 	</update>
-
+	
+	<select id="selectMember" parameterType="member" resultMap="memberResultSet">
+		SELECT USER_NO
+			 , USER_ID
+			 , USER_PWD
+			 , USER_NAME
+			 , EMAIL
+			 , PHONE
+			 , TO_CHAR(BIRTH, 'YYYY-MM-DD') AS "BIRTH"
+			 , GENDER
+			 , ADDRESS
+			 , ENROLL_DATE
+			 , USER_STATUS
+			 , PROFILE
+			 , EMAIL_KEY
+			 , EMAIL_AUTH
+		FROM MEMBER
+		WHERE USER_STATUS = 'Y'
+		AND USER_NO = #{userNo}
+	</select>
+	
+	<update id="deleteMember" parameterType="member">
+		UPDATE MEMBER
+		SET USER_STATUS = 'N'
+		WHERE USER_NO = #{userNo}
+	</update>
+	
 </mapper>

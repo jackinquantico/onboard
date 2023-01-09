@@ -23,8 +23,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member selectMember(Member m) {
-		// TODO Auto-generated method stub
-		return null;
+		return memberDao.selectMember(sqlSession, m);
 	}
 
 	@Override
@@ -34,8 +33,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int deleteMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.deleteMember(sqlSession, m);
 	}
 
 	@Override

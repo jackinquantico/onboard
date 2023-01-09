@@ -2,7 +2,10 @@ package com.jk.onboard.member.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.mail.Session;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -48,8 +51,11 @@ public class MemberController {
 			// 2. 원본 파일명에서 확장자 뽑기
 			String ext = originName.substring(originName.lastIndexOf("."));
 			
+			// 2-2. 현재 시간 추출해서 파일명에 합치기
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			
 			// 3. 멤버아이디 + 확장자 이어붙이기
-			String changeName = m.getUserId() + ext;
+			String changeName = m.getUserId() + currentTime + ext;
 			
 			// 4. 업로드하고자 하는 서버의 실경로 알아내기
 			String savePath = session.getServletContext().getRealPath("/resources/images/");
@@ -171,8 +177,6 @@ public class MemberController {
 	@RequestMapping("update.me")
 	public String updateMember(Member m, MultipartFile changeFile, String originFile, HttpSession session) {
 		
-		System.out.println(m);
-		
 		// 만약 새로 업로드된 파일이 있을 경우에는 기존 파일 삭제
 		
 		// 1. 업로드 서버의 실경로 알아내기
@@ -185,13 +189,16 @@ public class MemberController {
 			
 			// 1. 원본 파일명
 			String originName = changeFile.getOriginalFilename();
-			
+						
 			// 2. 원본 파일명에서 확장자 뽑기
 			String ext = originName.substring(originName.lastIndexOf("."));
 			
-			// 3. 멤버아이디 + 확장자 이어붙이기
-			String changeName = m.getUserId() + ext;
+			// 2-2. 현재 시간 추출해서 파일명에 합치기
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 			
+			// 3. 멤버아이디 + 확장자 이어붙이기
+			String changeName = m.getUserId() + currentTime + ext;
+
 			try {
 				changeFile.transferTo(new File(savePath + changeName));
 			} catch (IllegalStateException e) {
@@ -208,12 +215,35 @@ public class MemberController {
 		if (result > 0) {
 			
 			// 세션의 loginUser 정보가 변경되지 않아 변경전 정보로 보이는 이슈
+			// => loginUser 정보를 업데이트해주기
+			Member loginUser = memberService.selectMember(m);
 			
+			// 이후에도 파일명이 같으면 강력 새로고침하지 않는 이상 기존 파일을 보여주는 이슈
+			// => 파일명에 시간 포함해서 구분
+			
+			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", "회원정보 수정에 성공했습니다.");
 		} else {
 			session.setAttribute("alertMsg", "회원정보 수정에 실패했습니다.");
 		}
 		
 		return "redirect:/myPage.me";
+	}
+	
+	@RequestMapping("delete.me")
+	public String deleteMember(Member m, HttpSession session) {
+		
+		int result = memberService.deleteMember(m);
+		
+		if (result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 탈퇴처리가 완료되었습니다.");
+			
+			// 탈퇴 이후에는 로그아웃되도록 처리
+			logoutUser(session);
+		} else {
+			session.setAttribute("alertMsg", "회원 탈퇴에 실패했습니다.");
+		}
+		
+		return "redirect:/";
 	}
 }

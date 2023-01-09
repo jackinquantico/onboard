@@ -56,7 +56,7 @@
 <div class="masthead">
 
 	<div class="container">
-	<form action="update.me" method="post" id="enrollForm" enctype="multipart/form-data">
+	<form action="" method="post" id="enrollForm" enctype="multipart/form-data">
 		
 		<div class="d-grid" id="pageTitle">
 			<h4>마이페이지</h4>
@@ -146,10 +146,10 @@
 		<br>
 		
 		<div id="btnarea">
-	        <button type="button" class="btn btn-outline-primary rounded-pill btn-lg" id="submitbtn">
+	        <button type="button" onclick="return updateMember(1);" class="btn btn-outline-primary rounded-pill btn-lg" id="submitbtn">
 	            탈퇴하기
 	        </button>
-			<button type="submit" onclick="return validate();" class="btn btn-primary rounded-pill btn-lg" id="submitbtn">
+			<button type="button" onclick="updateMember(2);" class="btn btn-primary rounded-pill btn-lg" id="submitbtn">
 	            변경하기
 	        </button>
         </div>
@@ -170,6 +170,23 @@ function addImg(input, expression) {
 			$(expression).attr("src", e.target.result);
 		}
 		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+function updateMember(num) {
+	
+	if (num == 1) {
+		
+		if (confirm("OnBoard 에서 탈퇴하시겠습니까?")) {
+			
+			$("#enrollForm").attr("action", "delete.me");
+			$("#enrollForm").submit();
+		} else {
+			return false;
+		}
+	} else {
+		$("#enrollForm").attr("action", "update.me");
+		$("#enrollForm").submit();
 	}
 }
 
