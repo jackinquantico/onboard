@@ -89,5 +89,13 @@
 		AND EMAIL = #{email}
 		AND USER_STATUS = 'Y'
 	</select>
+	
+	<update id="updateMember" parameterType="member">
+		UPDATE MEMBER
+		SET BIRTH = #{birth}
+		  , ADDRESS = #{address}
+		  , PROFILE = #{profile}
+		WHERE USER_NO = #{userNo}
+	</update>
 
 </mapper>

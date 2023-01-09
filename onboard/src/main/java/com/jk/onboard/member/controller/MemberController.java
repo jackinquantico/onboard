@@ -1,5 +1,8 @@
 package com.jk.onboard.member.controller;
 
+import java.io.File;
+import java.io.IOException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jk.onboard.member.model.service.MemberService;
 import com.jk.onboard.member.model.vo.Member;
@@ -27,8 +31,40 @@ public class MemberController {
 		return "member/memberEnrollForm";
 	}
 	
+	/**
+	 * 회원가입 처리
+	 * @param m : 가입할 회원의 정보
+	 * @param profileFile : 프로필 사진 파일
+	 */
 	@RequestMapping("enroll.me")
-	public String insertMember(Member m, HttpSession session) {
+	public String insertMember(Member m, HttpSession session, MultipartFile profileFile) {
+		
+		if (!profileFile.getOriginalFilename().equals("")) {
+			
+			// 파일명 수정 작업 후 서버에 업로드하기
+			// 1. 원본 파일명
+			String originName = profileFile.getOriginalFilename();
+			
+			// 2. 원본 파일명에서 확장자 뽑기
+			String ext = originName.substring(originName.lastIndexOf("."));
+			
+			// 3. 멤버아이디 + 확장자 이어붙이기
+			String changeName = m.getUserId() + ext;
+			
+			// 4. 업로드하고자 하는 서버의 실경로 알아내기
+			String savePath = session.getServletContext().getRealPath("/resources/images/");
+			
+			// 5. 실경로 + 파일명 합친 뒤 파일 업로드
+			try {
+				profileFile.transferTo(new File(savePath + changeName));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			m.setProfile(changeName);
+		}
 		
 		int result = memberService.insertMember(m);
 		
@@ -127,4 +163,57 @@ public class MemberController {
 		return userPwd;
 	}
 	
+	@RequestMapping("myPage.me")
+	public String myPage() {
+		return "member/myPage";
+	}
+	
+	@RequestMapping("update.me")
+	public String updateMember(Member m, MultipartFile changeFile, String originFile, HttpSession session) {
+		
+		System.out.println(m);
+		
+		// 만약 새로 업로드된 파일이 있을 경우에는 기존 파일 삭제
+		
+		// 1. 업로드 서버의 실경로 알아내기
+		String savePath = session.getServletContext().getRealPath("/resources/images/");
+		
+		if (!changeFile.getOriginalFilename().equals("")) {
+
+			// 기존 파일 삭제
+			new File(savePath + originFile).delete();
+			
+			// 1. 원본 파일명
+			String originName = changeFile.getOriginalFilename();
+			
+			// 2. 원본 파일명에서 확장자 뽑기
+			String ext = originName.substring(originName.lastIndexOf("."));
+			
+			// 3. 멤버아이디 + 확장자 이어붙이기
+			String changeName = m.getUserId() + ext;
+			
+			try {
+				changeFile.transferTo(new File(savePath + changeName));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			m.setProfile(changeName);
+		}
+		
+		int result = memberService.updateMember(m);
+		
+		if (result > 0) {
+			
+			// 세션의 loginUser 정보가 변경되지 않아 변경전 정보로 보이는 이슈
+			
+			session.setAttribute("alertMsg", "회원정보 수정에 성공했습니다.");
+		} else {
+			session.setAttribute("alertMsg", "회원정보 수정에 실패했습니다.");
+		}
+		
+		return "redirect:/myPage.me";
+	}
 }

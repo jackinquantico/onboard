@@ -29,8 +29,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public int updateMember(Member m) {
-		// TODO Auto-generated method stub
-		return 0;
+		return memberDao.updateMember(sqlSession, m);
 	}
 
 	@Override

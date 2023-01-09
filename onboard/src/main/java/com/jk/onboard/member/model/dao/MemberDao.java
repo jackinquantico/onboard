@@ -36,4 +36,8 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.findUserPwd", m);
 	}
 
+	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.updateMember", m);
+	}
+
 }
