@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper">
+
+	<resultMap id="boardResultSet" type="board">
+		<result column="BOARD_NO" property="boardNo" />
+		<result column="BOARD_TYPE" property="boardType" />
+		<result column="BOARD_TITLE" property="boardTitle" />
+		<result column="USER_NO" property="userNo" />
+		<result column="WRITE_DATE" property="writeDate" />
+		<result column="COUNT" property="count" />
+	</resultMap>
+	
+	<select id="selectFdboardList" resultMap="boardResultSet">
+		SELECT BOARD_NO
+			 , BOARD_TITLE
+			 , USER_ID AS "USER_NO"
+			 , TO_CHAR(WRITE_DATE, 'YYYY-MM-DD') AS "WRITE_DATE"
+			 , COUNT
+		FROM BOARD B
+		JOIN MEMBER M ON (B.USER_NO = M.USER_NO)
+		WHERE B.BOARD_STATUS = 'N'
+		AND BOARD_TYPE = 0
+		ORDER BY BOARD_NO DESC
+	</select>
+	
+	<select id="selectFdboardListCount" resultType="_int">
+		SELECT COUNT(BOARD_NO)
+		FROM BOARD
+		WHERE BOARD_STATUS = 'N'
+	</select>
+	
+</mapper>

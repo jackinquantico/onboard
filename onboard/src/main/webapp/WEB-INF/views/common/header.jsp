@@ -44,7 +44,7 @@
 	        <div class="collapse navbar-collapse" id="navbarResponsive">
 	            <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
 	                <li class="nav-item"><a class="nav-link me-lg-3" href="list.no">공지사항</a></li>
-	                <li class="nav-item"><a class="nav-link me-lg-3" href="#">일반게시판</a></li>
+	                <li class="nav-item"><a class="nav-link me-lg-3" href="list.fb">일반게시판</a></li>
 	            </ul>
 	            
 	            <c:choose>
