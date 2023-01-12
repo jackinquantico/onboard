@@ -80,7 +80,7 @@
 						<c:forEach var="b" items="${ blist }">
 							<tr>
 								<td align="center">${ b.boardNo }</td>
-								<td><a href="" class="atag">${ b.boardTitle }</a></td>
+								<td><a href="detail.fb?bno=${ b.boardNo }" class="atag">${ b.boardTitle }</a></td>
 								<td align="center">${ b.userNo }</td>
 								<td align="center">${ b.writeDate }</td>
 								<td align="center">${ b.count }</td>

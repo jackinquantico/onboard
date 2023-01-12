@@ -19,4 +19,6 @@ public class Board {
 	private int count;
 	private String boardStatus;
 	private String userNo;
+	
+	private int likePost;
 }

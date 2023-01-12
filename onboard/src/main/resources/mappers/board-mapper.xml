@@ -9,6 +9,8 @@
 		<result column="USER_NO" property="userNo" />
 		<result column="WRITE_DATE" property="writeDate" />
 		<result column="COUNT" property="count" />
+		<result column="BOARD_CONTENT" property="boardContent" />
+		<result column="LIKE_POST" property="likePost" />
 	</resultMap>
 	
 	<select id="selectFdboardList" resultMap="boardResultSet">
@@ -28,6 +30,26 @@
 		SELECT COUNT(BOARD_NO)
 		FROM BOARD
 		WHERE BOARD_STATUS = 'N'
+	</select>
+	
+	<update id="increaseCount" parameterType="_int">
+		UPDATE BOARD
+		SET COUNT = COUNT + 1
+		WHERE BOARD_NO = #{bno}
+	</update>
+	
+	<select id="selectBoard" parameterType="_int" resultMap="boardResultSet">
+		SELECT B.BOARD_NO
+			 , BOARD_TITLE
+			 , USER_ID AS "USER_NO"
+			 , TO_CHAR(WRITE_DATE, 'YYYY-MM-DD') AS "WRITE_DATE"
+			 , COUNT
+			 , BOARD_CONTENT
+		FROM BOARD B
+		JOIN MEMBER M ON (M.USER_NO = B.USER_NO)
+		WHERE B.BOARD_NO = #{bno}
+		AND BOARD_STATUS = 'N'
+		AND BOARD_TYPE = 0
 	</select>
 	
 </mapper>

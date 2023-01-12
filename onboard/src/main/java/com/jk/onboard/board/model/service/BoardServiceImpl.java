@@ -49,14 +49,12 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public Board selectBoard(int bno) {
-		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectBoard(sqlSession, bno);
 	}
 
 	@Override
 	public int increaseCount(int bno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.increaseCount(sqlSession, bno);
 	}
 
 }

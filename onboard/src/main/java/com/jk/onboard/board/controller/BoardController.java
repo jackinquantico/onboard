@@ -2,6 +2,8 @@ package com.jk.onboard.board.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,5 +36,22 @@ public class BoardController {
 		model.addAttribute("pi", pi);
 		
 		return "fboard/fboardListView";
+	}
+	
+	@RequestMapping("detail.fb")
+	public String fdboardDetailView(int bno, Model model, HttpSession session) {
+		
+		int result = boardService.increaseCount(bno);
+		
+		if (result > 0) {
+			
+			Board b = boardService.selectBoard(bno);
+			model.addAttribute("b", b);
+			return "fboard/fboardDetailView";
+		} else {
+			
+			session.setAttribute("alertMsg", "해당 게시글이 존재하지 않습니다.");
+			return "redirect:/list.fb";
+		}
 	}
 }
