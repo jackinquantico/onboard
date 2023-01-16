@@ -94,10 +94,10 @@
 		
 		<c:if test="${ loginUser.userId eq b.userNo }">
 			<div id="btnarea">
-		        <button type="button" onclick="updateNotice(1);" class="btn btn-outline-primary rounded-pill btn-lg">
+		        <button type="button" onclick="updateBoard(1);" class="btn btn-outline-primary rounded-pill btn-lg">
 		        	수정하기
 		        </button>
-				<button type="button" onclick="updateNotice(2);" class="btn btn-primary rounded-pill btn-lg">
+				<button type="button" onclick="updateBoard(2);" class="btn btn-primary rounded-pill btn-lg">
 		            	삭제하기
 		        </button>
 	        </div>
@@ -110,12 +110,12 @@
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 
 <script>
-function updateNotice(num) {
+function updateBoard(num) {
 	
 	if (num == 1) {
-		location.href = "updateForm.fb?nno=" + ${ b.boardNo };
+		location.href = "updateForm.fb?bno=" + ${ b.boardNo };
 	} else {
-		location.href = "delete.fb?nno=" + ${ b.boardNo };
+		location.href = "delete.fb?bno=" + ${ b.boardNo };
 	}
 }
 </script>

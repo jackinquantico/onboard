@@ -52,4 +52,10 @@
 		AND BOARD_TYPE = 0
 	</select>
 	
+	<update id="deleteFdboard" parameterType="_int">
+		UPDATE BOARD
+		SET BOARD_STATUS = 'Y'
+		WHERE BOARD_NO = #{bno}
+	</update>
+	
 </mapper>

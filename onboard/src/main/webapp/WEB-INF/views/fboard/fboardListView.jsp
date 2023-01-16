@@ -72,7 +72,7 @@
 					<c:when test="${ empty blist }">
 						<tr>
 							<td colspan="5" align="center">
-								현재 작성된 공지사항이 없습니다.
+								현재 작성된 게시글이 없습니다.
 							</td>
 						</tr>
 					</c:when>

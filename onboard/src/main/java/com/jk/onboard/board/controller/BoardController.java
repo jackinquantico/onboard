@@ -54,4 +54,18 @@ public class BoardController {
 			return "redirect:/list.fb";
 		}
 	}
+	
+	@RequestMapping("delete.fb")
+	public String deleteFdboard(int bno, HttpSession session) {
+		
+		int result = boardService.deleteFdboard(bno);
+		
+		if (result > 0) {
+			session.setAttribute("alertMsg", "게시글이 성공적으로 삭제되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "게시글 삭제에 실패했습니다.");
+		}
+		
+		return "redirect:/list.fb";
+	}
 }

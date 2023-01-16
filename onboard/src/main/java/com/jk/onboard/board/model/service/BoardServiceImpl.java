@@ -43,8 +43,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int deleteFdboard(int bno) {
-		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.deleteFdboard(sqlSession, bno);
 	}
 
 	@Override
