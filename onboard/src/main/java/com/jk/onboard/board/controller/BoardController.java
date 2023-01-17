@@ -68,4 +68,9 @@ public class BoardController {
 		
 		return "redirect:/list.fb";
 	}
+	
+	@RequestMapping("enroll.fb")
+	public String fdboardEnrollForm() {
+		return "fboard/fboardEnrollForm";
+	}
 }

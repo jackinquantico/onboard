@@ -50,7 +50,7 @@
 			</div>
 			<c:if test="${ not empty loginUser }">
 				<div id="btnarea" style="float: right;">
-					<a href="enroll.no" class="btn btn-primary">작성하기</a>
+					<a href="enroll.fb" class="btn btn-primary">작성하기</a>
 				</div>
 			</c:if>
 		</div>
