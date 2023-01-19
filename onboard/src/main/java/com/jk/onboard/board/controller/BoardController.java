@@ -1,6 +1,7 @@
 package com.jk.onboard.board.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.jk.onboard.board.model.service.BoardService;
 import com.jk.onboard.board.model.vo.Board;
@@ -73,4 +76,16 @@ public class BoardController {
 	public String fdboardEnrollForm() {
 		return "fboard/fboardEnrollForm";
 	}
+	
+	@RequestMapping("insert.fb")
+	public String insertFdboard(Board b, MultipartHttpServletRequest request, HttpSession session) {
+		
+		List<MultipartFile> flist = request.getFiles("changeFile");
+		
+		System.out.println(flist);
+		
+		return "redirect:/list.fb";
+	}
+	
+	
 }

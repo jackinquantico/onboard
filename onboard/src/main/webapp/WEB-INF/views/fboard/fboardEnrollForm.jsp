@@ -47,27 +47,29 @@
 	
 		<div id="pageTitle">
 			<div id="titlearea" style="float: left">
-				<h4>공지사항 작성</h4>
+				<h4>자유게시판</h4>
 			</div>
 		</div>
 		
-		<form action="insert.fb">
+		<br>
+		
+		<form action="insert.fb" enctype="multipart/form-data">
 			<div class="d-grid">
 				<table id="inputTable">
 					<tr>
 						<td width="15%">제목</td>
 						<td width="85%">
-							<input type="text" name="noticeTitle" maxlength="20" class="form-control" required>
+							<input type="text" name="boardTitle" maxlength="20" class="form-control" required>
 						</td>
 					</tr>
 					<tr>
 						<td>내용</td>
 						<td>
-							<textarea id="noticeContent" name="noticeContent" class="form-control" maxlength="165" required></textarea>
+							<textarea id="noticeContent" name="boardContent" class="form-control" maxlength="165" required></textarea>
 						</td>
 					</tr>
 					<tr>
-						<td>첨부파일</td>
+						<td>대표 <br> 첨부파일</td>
 						<td>
 							<img src="https://media.istockphoto.com/id/922962354/vector/no-image-available-sign.jpg?b=1&s=170667a&w=0&k=20&c=VqpxaeBt-p0q2JlujQV-0fmCsaD3NeP4mmOUX4uZEIc=" 
 								id="attachment" height="300px" />
@@ -76,7 +78,16 @@
 					<tr>
 						<td></td>
 						<td>
-							<input type="file" id="changeFile" name="changeFile" class="form-control" onchange="addImg(this, '#attachment');">
+							<input type="file" multiple="multiple" id="changeFile" name="changeFile" class="form-control" onchange="addImg(this, '#attachment');">
+							<br>
+						</td>
+					</tr>
+					<tr>
+						<td>첨부파일</td>
+						<td>
+							<input type="file" multiple="multiple" name="changeFile" class="form-control">
+							<input type="file" multiple="multiple" name="changeFile" class="form-control">
+							<input type="file" multiple="multiple" name="changeFile" class="form-control">
 						</td>
 					</tr>
 				</table>
